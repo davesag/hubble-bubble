@@ -48,7 +48,50 @@ module HubbleBubble
     end
     
   end
-  
+
+  class WorksReader
+
+    def initialize(file)
+      @file = file
+    end
+
+    def to_works
+      doc = Nokogiri::XML(@file) do |config|
+        config.strict.nonet
+      end
+      doc.xpath("//work").map do |work|
+        # http://stackoverflow.com/questions/26380935/convert-xml-to-ruby-hash-with-attributes
+        CobraVsMongoose.xml_to_hash(work.to_s)['work']
+      end
+    end
+
+  end
+
+  class WorksWriter
+
+    def initialize(presenter, output_folder)
+      @presenter = presenter
+      @output_folder = output_folder
+    end
+
+    def write
+      page = @presenter.render_index
+      emit page[:html], File.join(@output_folder, "#{page[:filename]}.html")
+      @presenter.render_camera_makes.each do |page|
+        emit page[:html], File.join(@output_folder, 'makes', "#{page[:filename]}.html")
+      end
+      @presenter.render_camera_models.each do |page|
+        emit page[:html], File.join(@output_folder, 'models', "#{page[:filename]}.html")
+      end
+    end
+
+    private
+    
+    def emit(html, to_path)
+      File.open(to_path, 'w') { |file| file.write html }
+    end
+  end
+
   class WorksPresenter
 
     attr_reader :title, :thumbnails, :navigation

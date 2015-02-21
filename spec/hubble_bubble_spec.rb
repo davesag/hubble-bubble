@@ -33,7 +33,6 @@ describe HubbleBubble do
   describe HubbleBubble::WorksReader do
 
     it "can read an XML file without errors" do
-      pending "The test is implemented but the code to pass it is not."
       expect(works).not_to be_nil
       expect(works).to be_instance_of Array
       expect(works[0]).to be_instance_of Hash
@@ -61,7 +60,6 @@ describe HubbleBubble do
     end
 
     it "emits a file without errors" do
-      pending "The test is implemented but the code to pass it is not."
       writer.send :emit, test_string, output_file
       expect(File.exists?(output_file)).to eq true
       expect(text_read_in).to eq test_string
