@@ -119,7 +119,12 @@ module HubbleBubble
     # - Thumbnail images of the first 10 works for that camera make
     # - Navigation that allows the user to browse to the index page and to all camera models of that make
     def render_camera_makes
-      [{html: "<p>This is just a test</p>", filename: 'make'}]
+      make_names.map do |make|
+        @title = build_title("Camera maker #{make}")
+        @thumbnails = works_with_make(make).first(10)
+        @navigation = model_names(make)
+        {html: render(:make), filename: slug(make)}
+      end
     end
     
     # Each Camera Model HTML page must contain:
@@ -158,6 +163,18 @@ module HubbleBubble
     
     def render(view)
       @layout.render(self) { "navigation_#{view.to_s}".to_sym }
+    end
+
+    def works_with_make(a_make)
+      @works.select { |w| make(w) == a_make }
+    end
+
+    def model_names(a_make =  nil)
+      if a_make
+        (works_with_make(a_make).map {|w| model(w)}).uniq.sort
+      else
+        (@works.map {|w| model(w)}).uniq.sort
+      end
     end
 
     def make_names

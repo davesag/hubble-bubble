@@ -155,7 +155,6 @@ describe HubbleBubble do
       let(:works_with_make) { presenter.send :works_with_make,  HubbleBubble::UNKNOWN }
     
       it "returns a list of works with nil as a make name" do
-        pending "The test is implemented but the code to pass it is not."
         expect(works_with_make.length).to eq 2
         works_with_make.each { |w| expect(w['exif']['make']).to be_nil }
       end
@@ -166,7 +165,6 @@ describe HubbleBubble do
       let(:works_with_make) { presenter.send :works_with_make,  make_name }
     
       it "returns a list of works with the correct make name" do
-        pending "The test is implemented but the code to pass it is not."
         expect(works_with_make.length).to eq 1
         expect(works_with_make[0]['exif']['make']['$']).to eq make_name
       end
