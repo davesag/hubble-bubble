@@ -120,7 +120,7 @@ module HubbleBubble
     # - Navigation that allows the user to browse to the index page and to all camera models of that make
     def render_camera_makes
       make_names.map do |make|
-        @title = build_title("Camera make #{make}")
+        @title = build_title("Camera maker #{make}")
         @thumbnails = works_with_make(make).first(10)
         @navigation = model_names(make)
         {html: render(:make), filename: slug(make)}
