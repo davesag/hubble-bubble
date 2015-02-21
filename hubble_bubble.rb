@@ -129,10 +129,35 @@ module HubbleBubble
       [{html: "<p>This is just a test</p>", filename: 'model'}]
     end
 
+    def slug(name)
+      name.downcase.gsub(/[^a-z0-9]+/,'-').chomp('-')
+    end
+
+    def name(work)
+      filename(work).gsub(/\.[^.]*\Z/, '')
+    end
+
+    def filename(work)
+      work['filename']['$']
+    end
+
+    def url(work, size)
+      url_array = work['urls']['url']
+      url_index = url_array.find_index { |url| url['@type'] == size }
+      url_array[url_index]['$']
+    end
+
+    def partial(name)
+      file_path = File.join('views', "_#{name.to_s}.slim")
+      return unless File.exists?(file_path)
+      content = File.read(file_path)
+      Slim::Template.new { content }.render(self)
+    end
+
     private
     
     def render(view)
-      @layout.render(self)
+      @layout.render(self) { "navigation_#{view.to_s}".to_sym }
     end
 
     def make_names
