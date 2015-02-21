@@ -2,9 +2,29 @@ doctype html
 html
   head
     title=title
-    css:
+    scss:
+      @mixin inline {
+        display: inline-block;
+        *display:inline;
+        zoom:1;
+      }
       nav {
         margin: 10px;
+        & > ul > li {
+          @include inline;
+          padding: 0.25em 0.5em;
+          & > a {
+            text-transform: uppercase;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+      ul.thumbnails > li {
+        @include inline;
+        padding: 0.25em;
       }
   body
     header
