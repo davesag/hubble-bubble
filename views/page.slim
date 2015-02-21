@@ -2,27 +2,28 @@ doctype html
 html
   head
     title=title
-    css:
+    scss:
+      @mixin inline {
+        display: inline-block;
+        *display:inline;
+        zoom:1;
+      }
       nav {
         margin: 10px;
-      }
-      nav > ul > li {
-        display: inline-block;
-        *display:inline;
-        zoom:1;
-        padding: 0.25em 0.5em;
-      }
-      nav > ul > li > a {
-        text-transform: uppercase;
-        text-decoration: none;
-      }
-      nav > ul > li > a:hover {
-        text-decoration: underline;
+        & > ul > li {
+          @include inline;
+          padding: 0.25em 0.5em;
+          & > a {
+            text-transform: uppercase;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
       }
       ul.thumbnails > li {
-        display: inline-block;
-        *display:inline;
-        zoom:1;
+        @include inline;
         padding: 0.25em;
       }
   body
