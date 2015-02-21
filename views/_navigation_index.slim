@@ -1,0 +1,4 @@
+-# Navigation that allows the user to browse to all camera makes
+-for name in navigation
+  li data={camera_maker: name}
+    a href="makes/#{slug(name)}.html" title="Cameras made by #{name}" =name

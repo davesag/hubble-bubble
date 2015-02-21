@@ -1,0 +1,6 @@
+-if thumbnails && !thumbnails.empty?
+  ul.thumbnails
+    -for work in thumbnails
+      li: img alt="Image #{name(work)}" src=url(work, 'small') data={filename: filename(work)}
+-else
+  p No thumbnails

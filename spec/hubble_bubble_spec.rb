@@ -76,7 +76,6 @@ describe HubbleBubble do
       let(:partial) { presenter.partial(:thumbnails) }
 
       it "renders a valid partial" do
-        pending "The test is implemented but the code to pass it is not."
         expect(partial).to include "No thumbnails"
       end
     end
@@ -85,7 +84,6 @@ describe HubbleBubble do
       let(:view) { presenter.send :render, :index }
 
       it "renders a valid view" do
-        pending "The test is implemented but the code to pass it is not."
         expect(view).to include "!DOCTYPE html"
       end
     end
@@ -96,7 +94,6 @@ describe HubbleBubble do
       let(:title)      { presenter.send :build_title, title_text }
     
       it "can build a consistent title" do
-        pending "The test is implemented but the code to pass it is not."
         expect(title).to eq expected
       end
     end
@@ -124,7 +121,6 @@ describe HubbleBubble do
       let(:make_names) { presenter.send :make_names }
 
       it "can extract an alphabetically sorted list of make names" do
-        pending "The test is implemented but the code to pass it is not."
         expect(make_names).to eq all_makes
       end
     end
@@ -135,7 +131,6 @@ describe HubbleBubble do
       let(:expected) { 'this-is-entirely-0-unsuitable'      }
       
       it "generates a sensible slug" do
-        pending "The test is implemented but the code to pass it is not."
         expect(slug).to eq expected
       end
     end
@@ -148,12 +143,10 @@ describe HubbleBubble do
       let(:f_expected) { "#{expected}.jpg"        }
       
       it "generates a sensible name" do
-        pending "The test is implemented but the code to pass it is not."
         expect(name).to eq expected
       end
 
       it "returns the filename" do
-        pending "The test is implemented but the code to pass it is not."
         expect(filename).to eq f_expected
       end
     end
@@ -230,7 +223,6 @@ describe HubbleBubble do
       let(:expected)  { 'http://ih1.redbubble.net/work.31820.1.flat,135x135,075,f.jpg' }
 
       it "can extract the small one" do
-        pending "The test is implemented but the code to pass it is not."
         expect(small_url).to eq expected
       end
     end
@@ -241,7 +233,6 @@ describe HubbleBubble do
         let(:expected_filename) { 'index' }
 
         it "renders the index" do
-          pending "The test is implemented but the code to pass it is not."
           expect(page_info[:filename]).to eq expected_filename
         end
       end

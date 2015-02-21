@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title=title
+    css:
+      nav {
+        margin: 10px;
+      }
+  body
+    header
+      h1=title
+      nav: ul
+        ==partial yield
+    ==partial :thumbnails

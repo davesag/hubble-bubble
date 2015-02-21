@@ -97,7 +97,9 @@ module HubbleBubble
     attr_reader :title, :thumbnails, :navigation
 
     def initialize(works)
+      Slim::Engine.set_options(pretty: true, format: :html)
       @works = works
+      @layout = Slim::Template.new { File.read("views/page.slim") }
       @title = ''
       @thumbnails = []
       @navigation = []
@@ -107,21 +109,76 @@ module HubbleBubble
     # - Thumbnail images for the first 10 work
     # - Navigation that allows the user to browse to all camera makes
     def render_index
-
+      @title = build_title('Index')
+      @thumbnails = @works.first(10)
+      @navigation = make_names
+      {html: render(:index), filename: 'index'}
     end
 
     # Each Camera Make HTML page must contain:
     # - Thumbnail images of the first 10 works for that camera make
     # - Navigation that allows the user to browse to the index page and to all camera models of that make
     def render_camera_makes
-
+      [{html: "<p>This is just a test</p>", filename: 'make'}]
     end
     
     # Each Camera Model HTML page must contain:
     # - Thumbnail images of all works for that camera make and model
     # - Navigation that allows the user to browse to the index page and the camera make
     def render_camera_models
+      [{html: "<p>This is just a test</p>", filename: 'model'}]
+    end
 
+    def slug(name)
+      name.downcase.gsub(/[^a-z0-9]+/,'-').chomp('-')
+    end
+
+    def name(work)
+      filename(work).gsub(/\.[^.]*\Z/, '')
+    end
+
+    def filename(work)
+      work['filename']['$']
+    end
+
+    def url(work, size)
+      url_array = work['urls']['url']
+      url_index = url_array.find_index { |url| url['@type'] == size }
+      url_array[url_index]['$']
+    end
+
+    def partial(name)
+      file_path = File.join('views', "_#{name.to_s}.slim")
+      return unless File.exists?(file_path)
+      content = File.read(file_path)
+      Slim::Template.new { content }.render(self)
+    end
+
+    private
+    
+    def render(view)
+      @layout.render(self) { "navigation_#{view.to_s}".to_sym }
+    end
+
+    def make_names
+      (@works.map {|w| make(w)}).uniq.sort
+    end
+
+    def build_title(text)
+      "RedBubble | #{text}"
+    end
+
+    def make(work)
+      return UNKNOWN unless has_make?(work)
+      work['exif']['make']['$']
+    end
+
+    def has_make?(work)
+      has_exif?(work) && !work['exif']['make'].nil?
+    end
+
+    def has_exif?(work)
+      !work['exif'].nil?
     end
 
   end
