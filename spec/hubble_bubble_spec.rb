@@ -85,7 +85,6 @@ describe HubbleBubble do
       let(:view) { presenter.send :render, :index }
 
       it "renders a valid view" do
-        pending "The test is implemented but the code to pass it is not."
         expect(view).to include "!DOCTYPE html"
       end
     end
@@ -96,7 +95,6 @@ describe HubbleBubble do
       let(:title)      { presenter.send :build_title, title_text }
     
       it "can build a consistent title" do
-        pending "The test is implemented but the code to pass it is not."
         expect(title).to eq expected
       end
     end
@@ -124,7 +122,6 @@ describe HubbleBubble do
       let(:make_names) { presenter.send :make_names }
 
       it "can extract an alphabetically sorted list of make names" do
-        pending "The test is implemented but the code to pass it is not."
         expect(make_names).to eq all_makes
       end
     end
@@ -241,7 +238,6 @@ describe HubbleBubble do
         let(:expected_filename) { 'index' }
 
         it "renders the index" do
-          pending "The test is implemented but the code to pass it is not."
           expect(page_info[:filename]).to eq expected_filename
         end
       end
