@@ -1,0 +1,5 @@
+-# Navigation that allows the user to browse to the index page and to all camera models of that make
+li: a href="../index.html" title="Return to the home page" Home
+-for name in navigation
+  li data={camera_model: name}
+    a href="../models/#{slug(name)}.html" title="Camera model '#{name}'" =name

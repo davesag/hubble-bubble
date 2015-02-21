@@ -1,0 +1,5 @@
+-# Navigation that allows the user to browse to the index page and the camera make
+- camera_make = navigation[0]
+li: a href="../index.html" title="Return to the home page" Home
+li data={camera_maker: camera_make}
+  a href="../makes/#{slug(camera_make)}.html" title="Cameras made by '#{camera_make}'" =camera_make

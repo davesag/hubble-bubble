@@ -102,7 +102,6 @@ describe HubbleBubble do
       let(:model_names) { presenter.send :model_names }
 
       it "can extract an alphabetically sorted list of model names" do
-        pending "The test is implemented but the code to pass it is not."
         expect(model_names).to eq all_models
       end
 
@@ -112,7 +111,6 @@ describe HubbleBubble do
       let(:model_names) { presenter.send :model_names, make_name }
       let(:expected)    { [model_name] }
       it "can extract a list of model names" do
-        pending "The test is implemented but the code to pass it is not."
         expect(model_names).to eq expected
       end
     end
@@ -178,7 +176,6 @@ describe HubbleBubble do
       let(:make_for_junk_model)       { presenter.send :make_for_model, junk }
 
       it "returns a list of works with nil as a model name and nil and a make name" do
-        pending "The test is implemented but the code to pass it is not."
         expect(works_with_make_and_model.length).to eq 2
         works_with_make_and_model.each do |w|
           expect(w['exif']['make']).to  be_nil
@@ -187,12 +184,10 @@ describe HubbleBubble do
       end
 
       it "returns 'unknown' given an the model name 'unknown'" do
-        pending "The test is implemented but the code to pass it is not."
         expect(make_for_model).to eq HubbleBubble::UNKNOWN
       end
 
       it "returns 'unknown' given an unknown the model name" do
-        pending "The test is implemented but the code to pass it is not."
         expect(make_for_junk_model).to eq HubbleBubble::UNKNOWN
       end
     end
@@ -202,14 +197,12 @@ describe HubbleBubble do
       let(:make_for_model)            { presenter.send :make_for_model, model_name }
       
       it "returns a list of works with the correct model name" do
-        pending "The test is implemented but the code to pass it is not."
         expect(works_with_make_and_model.length).to eq 1
         expect(works_with_make_and_model[0]['exif']['make']['$']).to  eq make_name
         expect(works_with_make_and_model[0]['exif']['model']['$']).to eq model_name
       end
 
       it "returns the correct camera make for a known model name" do
-        pending "The test is implemented but the code to pass it is not."
         expect(make_for_model).to eq make_name
       end
 
@@ -239,8 +232,7 @@ describe HubbleBubble do
         let(:page_info) { presenter.send :render_camera_makes }
 
         it "renders the right number of camera make pages" do
-          pending "The test is implemented but the code to pass it is not."
-          expect(page_info.length).to eq all_makes.length
+            expect(page_info.length).to eq all_makes.length
         end
       end
 
@@ -248,8 +240,7 @@ describe HubbleBubble do
         let(:page_info) { presenter.send :render_camera_models }
 
         it "renders the right number of camera model pages" do
-          pending "The test is implemented but the code to pass it is not."
-          expect(page_info.length).to eq all_models.length
+            expect(page_info.length).to eq all_models.length
         end
       end
     end

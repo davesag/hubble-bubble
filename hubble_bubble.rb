@@ -131,7 +131,13 @@ module HubbleBubble
     # - Thumbnail images of all works for that camera make and model
     # - Navigation that allows the user to browse to the index page and the camera make
     def render_camera_models
-      [{html: "<p>This is just a test</p>", filename: 'model'}]
+      model_names.map do |model|
+        make = make_for_model(model)
+        @title = build_title("Camera make #{make}, and model #{model}")
+        @thumbnails = works_with_make_and_model(make, model)
+        @navigation = [make]
+        {html: render(:model), filename: slug(model)}
+      end
     end
 
     def slug(name)
@@ -161,12 +167,33 @@ module HubbleBubble
 
     private
     
+    def build_title(text)
+      "RedBubble | #{text}"
+    end
+
     def render(view)
       @layout.render(self) { "navigation_#{view.to_s}".to_sym }
     end
 
     def works_with_make(a_make)
       @works.select { |w| make(w) == a_make }
+    end
+
+    def works_with_make_and_model(a_make, a_model)
+      @works.select { |w| make(w) == a_make && model(w) == a_model }
+    end
+
+    def make_for_model(a_model)
+      work = @works.find_index { |w| model(w) == a_model }
+      if work
+        make(@works[work])
+      else
+        UNKNOWN
+      end
+    end
+
+    def make_names
+      (@works.map {|w| make(w)}).uniq.sort
     end
 
     def model_names(a_make =  nil)
@@ -177,21 +204,22 @@ module HubbleBubble
       end
     end
 
-    def make_names
-      (@works.map {|w| make(w)}).uniq.sort
-    end
-
-    def build_title(text)
-      "RedBubble | #{text}"
-    end
-
     def make(work)
       return UNKNOWN unless has_make?(work)
       work['exif']['make']['$']
     end
 
+    def model(work)
+      return UNKNOWN unless has_model?(work)
+      work['exif']['model']['$']
+    end
+
     def has_make?(work)
       has_exif?(work) && !work['exif']['make'].nil?
+    end
+
+    def has_model?(work)
+      has_exif?(work) && !work['exif']['model'].nil?
     end
 
     def has_exif?(work)
