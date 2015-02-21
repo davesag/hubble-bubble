@@ -17,25 +17,36 @@ module HubbleBubble
     def initialize(paths)
       @input_file    = path_to_file(paths[0])
       @output_folder = path_to_folder(paths[1])
+      run
     end
 
-  end
+    private
 
-  class WorksReader
-
-    def initialize(file)
-      @file = file
+    def run
+      create_folder 'makes'
+      create_folder 'models'
+      reader    = WorksReader.new(@input_file)
+      presenter = WorksPresenter.new(reader.to_works)
+      writer    = WorksWriter.new(presenter, @output_folder)
+      writer.write
     end
 
-  end
-
-  class WorksWriter
-
-    def initialize(presenter, output_folder)
-      @presenter = presenter
-      @output_folder = output_folder
+    def path_to_file(path)
+      path ||= DEFAULTS[:input_file]
+      raise ArgumentError, "No file at path #{path}" unless File.exists?(path)
+      File.open(path, "r")
     end
 
+    def path_to_folder(path)
+      path ||= DEFAULTS[:output_folder]
+      FileUtils::mkdir_p path unless File.exists?(path)
+      path
+    end
+    
+    def create_folder(path)
+      FileUtils::mkdir_p File.join(@output_folder, path) unless File.exists?(path)
+    end
+    
   end
   
   class WorksPresenter
